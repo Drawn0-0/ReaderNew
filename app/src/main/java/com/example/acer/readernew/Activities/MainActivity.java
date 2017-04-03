@@ -3,6 +3,8 @@ package com.example.acer.readernew.Activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,11 +21,16 @@ import com.example.acer.readernew.Utils.API;
 import com.example.acer.readernew.Utils.NetUtils;
 import com.example.acer.readernew.Utils.OnStringListener;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FloatingActionButton fab;
     private DrawerLayout drawer;
+    //tab的标题
+    private String[] tabTitle = new String[]{"头条","新闻","财经","体育","娱乐","军事","教育","科技","NBA","股票","星座","女性","健康","育儿"};
+    private TabLayout tabMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +38,15 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         initView();
+        initData();
         initEvent();
+    }
+
+    private void initData() {
+        //设置tab 标题
+        for (String aTabTitle : tabTitle) {
+            tabMain.addTab(tabMain.newTab().setText(aTabTitle));
+        }
     }
 
     private void initEvent() {
@@ -75,7 +90,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onError(VolleyError error) {
-
+                Log.i("NetUtils",getClass().getSimpleName()+"出现错误："+error.toString());
             }
         },"CHANNEL");
     }
@@ -92,6 +107,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //获取TabLayout
+        tabMain = (TabLayout) findViewById(R.id.tab_main);
+        //设置tab可滑动
+        tabMain.setTabMode(TabLayout.MODE_SCROLLABLE);
+
     }
 
     @Override
