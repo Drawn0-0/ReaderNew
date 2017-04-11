@@ -13,45 +13,26 @@ import com.android.volley.toolbox.Volley;
 
 public class VolleySingleton{
 
-    private static Context mContext;
-    private static VolleySingleton mInstance;
-    private RequestQueue mRequestQueue;
+    private static VolleySingleton volleySingleton;
+    private RequestQueue requestQueue;
 
-
-    private VolleySingleton(Context context) {
-        mContext=context;
-        mRequestQueue = getRequestQueue();
+    private VolleySingleton(Context context){
+        requestQueue = Volley.newRequestQueue(context.getApplicationContext());
     }
 
-    /**
-     * @return 返回Volley的实例
-     */
-    public static synchronized VolleySingleton newInstance(){
-
-        if (mInstance == null){
-            mInstance = new VolleySingleton(mContext);
+    public static synchronized VolleySingleton getVolleySingleton(Context context){
+        if(volleySingleton == null){
+            volleySingleton = new VolleySingleton(context);
         }
-        return mInstance;
-    };
-
-    /**
-     * @return 请求队列
-     */
-    private RequestQueue getRequestQueue(){
-        if (mRequestQueue == null){
-            // getApplicationContext() 是关键, 它避免了你
-            //传递进Activity或BroadcastReceiver导致的内存泄漏
-            mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
-        }
-        return mRequestQueue;
+        return volleySingleton;
     }
 
-    /**
-     * @param req 请求
-     * @param <T> 泛型
-     *           添加请求到请求队列
-     */
-    public<T> void addToRequestQueue(Request<T> req){
+    public RequestQueue getRequestQueue(){
+        return this.requestQueue;
+    }
+
+    public <T> void addToRequestQueue(Request<T> req){
         getRequestQueue().add(req);
     }
+
 }
