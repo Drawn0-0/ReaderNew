@@ -1,5 +1,8 @@
 package com.example.acer.readernew.Utils;
 
+import android.content.Context;
+
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -10,7 +13,12 @@ import com.android.volley.toolbox.StringRequest;
  */
 
 public class NetUtils {
-    public static void load(String url, final OnStringListener listener,String TAG) {
+    private Context context;
+    public NetUtils(Context context) {
+        this.context = context;
+    }
+
+    public void load(String url, final OnStringListener listener, String TAG) {
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -23,6 +31,9 @@ public class NetUtils {
             }
         });
         request.setTag(TAG);
-        MyApplication.getRequestQueue().add(request);
+        request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getVolleySingleton(context).addToRequestQueue(request);
     }
 }

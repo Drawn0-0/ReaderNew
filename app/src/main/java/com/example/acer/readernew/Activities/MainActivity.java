@@ -2,25 +2,25 @@ package com.example.acer.readernew.Activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
-import com.android.volley.VolleyError;
+import com.example.acer.readernew.Adapter.MainAdapter;
+import com.example.acer.readernew.Fragment.CustomFragment;
 import com.example.acer.readernew.R;
-import com.example.acer.readernew.Utils.API;
-import com.example.acer.readernew.Utils.NetUtils;
-import com.example.acer.readernew.Utils.OnStringListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -28,9 +28,8 @@ public class MainActivity extends AppCompatActivity
 
     private FloatingActionButton fab;
     private DrawerLayout drawer;
-    //tab的标题
-    private String[] tabTitle = new String[]{"头条","新闻","财经","体育","娱乐","军事","教育","科技","NBA","股票","星座","女性","健康","育儿"};
     private TabLayout tabMain;
+    private ViewPager vpMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +42,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initData() {
-        //设置tab 标题
-        for (String aTabTitle : tabTitle) {
-            tabMain.addTab(tabMain.newTab().setText(aTabTitle));
-        }
+
     }
 
     private void initEvent() {
@@ -82,17 +78,6 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-        NetUtils.load(API.getChannel, new OnStringListener() {
-            @Override
-            public void onSuccess(String result) {
-                System.out.println(result);
-            }
-
-            @Override
-            public void onError(VolleyError error) {
-                Log.i("NetUtils",getClass().getSimpleName()+"出现错误："+error.toString());
-            }
-        },"CHANNEL");
     }
 
     private void initView() {
@@ -112,7 +97,14 @@ public class MainActivity extends AppCompatActivity
         tabMain = (TabLayout) findViewById(R.id.tab_main);
         //设置tab可滑动
         tabMain.setTabMode(TabLayout.MODE_SCROLLABLE);
-
+        //viewPager
+        vpMain = (ViewPager) findViewById(R.id.vp_main);
+        List<Fragment> fragments =new ArrayList<>();
+        CustomFragment head = new CustomFragment();
+        fragments.add(head);
+        MainAdapter adapter = new MainAdapter(getSupportFragmentManager(),MainActivity.this,fragments);
+        vpMain.setAdapter(adapter);
+        tabMain.setupWithViewPager(vpMain);
     }
 
     @Override
@@ -124,28 +116,6 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

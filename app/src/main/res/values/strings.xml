@@ -5,4 +5,18 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="Constellation_fragment">Constellation</string>
+    <string name="Education_fragment">Education</string>
+    <string name="Entertainment_fragment">Entertainment</string>
+    <string name="Finance_fragment">Finance</string>
+    <string name="Headline_fragment">Headline</string>
+    <string name="Health_fragment">Health</string>
+    <string name="Military_fragment">Military</string>
+    <string name="NBA_fragment">NBA</string>
+    <string name="News_fragment">News</string>
+    <string name="Parenting_fragment">Parenting</string>
+    <string name="Sport_fragment">Sport</string>
+    <string name="Stock_fragment">Stock</string>
+    <string name="Technology_fragment">Technology</string>
+    <string name="Woman_fragment">Woman</string>
 </resources>
