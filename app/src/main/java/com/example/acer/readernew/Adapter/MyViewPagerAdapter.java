@@ -15,11 +15,11 @@ import java.util.List;
  * ViewPager的适配器
  */
 
-public class MainAdapter extends FragmentStatePagerAdapter {
+public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> fragments;
     private String[] tabTitle;
 
-    public MainAdapter(FragmentManager fm, Context context, List<Fragment> fragmentList) {
+    public MyViewPagerAdapter(FragmentManager fm, Context context, List<Fragment> fragmentList) {
         super(fm);
         fragments = fragmentList;
         //tab的标题

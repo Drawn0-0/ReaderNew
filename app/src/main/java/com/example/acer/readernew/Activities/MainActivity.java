@@ -14,10 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
-import com.example.acer.readernew.Adapter.MainAdapter;
+import com.example.acer.readernew.Adapter.MyViewPagerAdapter;
 import com.example.acer.readernew.Fragment.CustomFragment;
+import com.example.acer.readernew.Fragment.test;
 import com.example.acer.readernew.R;
 
 import java.util.ArrayList;
@@ -100,9 +100,10 @@ public class MainActivity extends AppCompatActivity
         //viewPager
         vpMain = (ViewPager) findViewById(R.id.vp_main);
         List<Fragment> fragments =new ArrayList<>();
-        CustomFragment head = new CustomFragment();
+        CustomFragment head = CustomFragment.newInstance();
         fragments.add(head);
-        MainAdapter adapter = new MainAdapter(getSupportFragmentManager(),MainActivity.this,fragments);
+        fragments.add(new test());
+        MyViewPagerAdapter adapter = new MyViewPagerAdapter(getSupportFragmentManager(),MainActivity.this,fragments);
         vpMain.setAdapter(adapter);
         tabMain.setupWithViewPager(vpMain);
     }
@@ -123,17 +124,13 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_homepage) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_collection) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_history) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_setting) {
 
         }
 

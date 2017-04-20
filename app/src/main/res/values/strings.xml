@@ -19,4 +19,10 @@
     <string name="Stock_fragment">Stock</string>
     <string name="Technology_fragment">Technology</string>
     <string name="Woman_fragment">Woman</string>
+    <string name="nav_setting">Setting</string>
+    <string name="nav_homepage">HomePage</string>
+    <string name="nav_history">History</string>
+    <string name="nav_collection">Collection</string>
+    <string name="hello_blank_fragment">hello,test</string>
+    <string name="loading_more">Loading...</string>
 </resources>
