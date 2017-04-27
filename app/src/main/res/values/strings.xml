@@ -22,7 +22,14 @@
     <string name="nav_setting">Setting</string>
     <string name="nav_homepage">HomePage</string>
     <string name="nav_history">History</string>
-    <string name="nav_collection">Collection</string>
-    <string name="hello_blank_fragment">hello,test</string>
+    <string name="nav_collection">Favorite</string>
     <string name="loading_more">Loading...</string>
+    <string name="action_add_to_bookmarks">favorite</string>
+    <string name="action_copy_link">copy link</string>
+    <string name="action_copy_text">copy text</string>
+    <string name="action_open_in_browser">open in browser</string>
+    <string name="cancel_bookmarks">cancel favorite</string>
+    <string name="basic">Basic</string>
+    <string name="setting_language">language</string>
+    <string name="settings">setting</string>
 </resources>

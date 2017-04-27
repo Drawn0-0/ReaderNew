@@ -15,10 +15,11 @@
             android:icon="@drawable/ic_history"
             android:title="@string/nav_history" />
     </group>
-
-    <item
-        android:id="@+id/nav_setting"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/nav_setting" />
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/nav_setting" />
+    </group>
 
 </menu>

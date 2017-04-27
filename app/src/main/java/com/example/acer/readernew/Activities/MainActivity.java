@@ -1,9 +1,8 @@
 package com.example.acer.readernew.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -17,16 +16,16 @@ import android.view.View;
 
 import com.example.acer.readernew.Adapter.MyViewPagerAdapter;
 import com.example.acer.readernew.Fragment.CustomFragment;
-import com.example.acer.readernew.Fragment.test;
 import com.example.acer.readernew.R;
+import com.example.acer.readernew.Utils.DefaultArgue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FloatingActionButton fab;
     private DrawerLayout drawer;
     private TabLayout tabMain;
     private ViewPager vpMain;
@@ -46,13 +45,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initEvent() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         //仿qq侧划效果
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -83,7 +75,6 @@ public class MainActivity extends AppCompatActivity
     private void initView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -100,9 +91,34 @@ public class MainActivity extends AppCompatActivity
         //viewPager
         vpMain = (ViewPager) findViewById(R.id.vp_main);
         List<Fragment> fragments =new ArrayList<>();
-        CustomFragment head = CustomFragment.newInstance();
+        CustomFragment head = CustomFragment.newInstance(DefaultArgue.Channel.headline,"HeadlineCacheFile","HeadlineCache");
+        CustomFragment news = CustomFragment.newInstance(DefaultArgue.Channel.news,"NewsCacheFile","NewsCache");
+        CustomFragment finance = CustomFragment.newInstance(DefaultArgue.Channel.finance,"financeCacheFile","financeCache");
+        CustomFragment sport = CustomFragment.newInstance(DefaultArgue.Channel.sport,"sportCacheFile","sportCache");
+        CustomFragment entertainment = CustomFragment.newInstance(DefaultArgue.Channel.entertainment,"entertainmentCacheFile","entertainmentCache");
+        CustomFragment military = CustomFragment.newInstance(DefaultArgue.Channel.military,"militaryCacheFile","militaryCache");
+        CustomFragment education = CustomFragment.newInstance(DefaultArgue.Channel.education,"educationCacheFile","educationCache");
+        CustomFragment technology = CustomFragment.newInstance(DefaultArgue.Channel.technology,"technologyCacheFile","technologyCache");
+        CustomFragment NBA = CustomFragment.newInstance(DefaultArgue.Channel.NBA,"NBACacheFile","NBACache");
+        CustomFragment stock = CustomFragment.newInstance(DefaultArgue.Channel.stock,"stockCacheFile","stockCache");
+        CustomFragment constellation = CustomFragment.newInstance(DefaultArgue.Channel.constellation,"constellationCacheFile","constellationCache");
+        CustomFragment woman = CustomFragment.newInstance(DefaultArgue.Channel.woman,"womanCacheFile","womanCache");
+        CustomFragment health = CustomFragment.newInstance(DefaultArgue.Channel.health,"healthCacheFile","healthCache");
+        CustomFragment parenting = CustomFragment.newInstance(DefaultArgue.Channel.parenting,"parentingCacheFile","parentingCache");
         fragments.add(head);
-        fragments.add(new test());
+        fragments.add(news);
+        fragments.add(finance);
+        fragments.add(sport);
+        fragments.add(entertainment);
+        fragments.add(military);
+        fragments.add(education);
+        fragments.add(technology);
+        fragments.add(NBA);
+        fragments.add(stock);
+        fragments.add(constellation);
+        fragments.add(woman);
+        fragments.add(health);
+        fragments.add(parenting);
         MyViewPagerAdapter adapter = new MyViewPagerAdapter(getSupportFragmentManager(),MainActivity.this,fragments);
         vpMain.setAdapter(adapter);
         tabMain.setupWithViewPager(vpMain);
@@ -131,7 +147,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_history) {
 
         } else if (id == R.id.nav_setting) {
-
+            Intent intent = new Intent(this,Setting.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

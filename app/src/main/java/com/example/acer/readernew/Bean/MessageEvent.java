@@ -6,13 +6,13 @@ package com.example.acer.readernew.Bean;
  */
 
 public class MessageEvent {
-    private final NewsBean bean;
-
-    public MessageEvent(NewsBean bean) {
-        this.bean=bean;
+    public NewsBean.ResultBean.ListBean getBean() {
+        return bean;
     }
 
-    public NewsBean getBean() {
-        return bean;
+    private final NewsBean.ResultBean.ListBean bean;
+
+    public MessageEvent(NewsBean.ResultBean.ListBean bean) {
+        this.bean = bean;
     }
 }

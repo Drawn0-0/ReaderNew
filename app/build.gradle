@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 25
@@ -18,7 +19,12 @@ android {
         }
     }
 }
-
+greendao {
+    schemaVersion 1//数据库版本号
+    daoPackage 'com.example.acer.readernew.Dao'//设置DaoMaster、DaoSession、Dao包名
+    targetGenDir 'src/main/java'
+//设置DaoMaster、DaoSession、Dao目录//targetGenDirTest：设置生成单元测试目录//generateTests：设置自动生成单元测试用例
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -26,12 +32,15 @@ dependencies {
     })
     android { useLibrary 'org.apache.http.legacy' }
     compile files('libs/gson-2.7.jar')
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'com.android.support:support-v4:25.3.0'
-    compile 'com.android.support:design:25.3.0'
+
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    testCompile 'junit:junit:4.12'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.jakewharton:disklrucache:2.0.2'
+    compile 'org.greenrobot:greendao:3.2.2'
+    compile 'com.android.support:preference-v14:25.3.1'
+    testCompile 'junit:junit:4.12'
 }
