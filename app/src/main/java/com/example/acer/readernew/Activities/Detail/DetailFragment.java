@@ -7,6 +7,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -74,7 +76,7 @@ public class DetailFragment extends Fragment implements DetailContact.View {
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scrollView.smoothScrollTo(0,0);
+                scrollView.smoothScrollTo(0, 0);
             }
         });
         floate.setOnClickListener(new View.OnClickListener() {
@@ -98,11 +100,11 @@ public class DetailFragment extends Fragment implements DetailContact.View {
         if (itemId == android.R.id.home) {
             getActivity().onBackPressed();
         } else {
-            if (itemId == R.id.detail_menu_more){
+            if (itemId == R.id.detail_menu_more) {
                 final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
                 View view = getActivity().getLayoutInflater().inflate(R.layout.reading_actions_sheet, null);
-                if (presenter.queryIfIsBookmarked()){
-                    ((TextView)view.findViewById(R.id.textView)).setText(R.string.cancel_bookmarks);
+                if (presenter.queryIfIsBookmarked()) {
+                    ((TextView) view.findViewById(R.id.textView)).setText(R.string.cancel_bookmarks);
                 }
 
                 view.findViewById(R.id.detail_menu_bookmark).setOnClickListener(new View.OnClickListener() {
@@ -122,7 +124,7 @@ public class DetailFragment extends Fragment implements DetailContact.View {
                 view.findViewById(R.id.layout_open_in_browser).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        presenter.openInBrowser();
+                        presenter.openUrl(webView);
                         dialog.dismiss();
                     }
                 });
@@ -155,6 +157,16 @@ public class DetailFragment extends Fragment implements DetailContact.View {
         scrollView = (NestedScrollView) view.findViewById(R.id.detail_scrollView);
         webView = (WebView) view.findViewById(R.id.detail_web_view);
 
+        webView.getSettings().setJavaScriptEnabled(true);
+        //缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
+        webView.getSettings().setBuiltInZoomControls(false);
+        //缓存
+        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        //开启DOM storage API功能
+        webView.getSettings().setDomStorageEnabled(true);
+        //开启application Cache功能
+        webView.getSettings().setAppCacheEnabled(false);
+
         toolbar = (Toolbar) view.findViewById(R.id.detail_toolbar);
         DetailActivity activity = (DetailActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -177,7 +189,7 @@ public class DetailFragment extends Fragment implements DetailContact.View {
 
     @Override
     public void showResult(String result) {
-        webView.loadDataWithBaseURL("x-data://base",result,"text/html","utf-8",null);
+        webView.loadDataWithBaseURL("x-data://base", result, "text/html", "utf-8", null);
     }
 
     @Override
@@ -213,7 +225,7 @@ public class DetailFragment extends Fragment implements DetailContact.View {
 
     @Override
     public void showTextCopied() {
-
+        Snackbar.make(imageView, R.string.copy_success, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -223,11 +235,11 @@ public class DetailFragment extends Fragment implements DetailContact.View {
 
     @Override
     public void showAddedToBookmarks() {
-
+        Snackbar.make(imageView, R.string.add_to_favorite, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showDeletedFromBookmarks() {
-
+        Snackbar.make(imageView, R.string.delete_to_favorite, Snackbar.LENGTH_SHORT).show();
     }
 }

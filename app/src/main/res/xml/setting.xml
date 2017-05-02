@@ -2,5 +2,22 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/basic">
 
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="in_app_browser"
+            android:summary="@string/in_app_browser_description"
+            android:title="@string/in_app_browser" />
+
+        <ListPreference
+            android:defaultValue="3"
+            android:entries="@array/time_to_save_opts"
+            android:entryValues="@array/time_to_save_values"
+            android:key="time_of_saving_articles"
+            android:title="@string/time_of_saving_articles" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/other">
+        <Preference
+            android:title="@string/clear_cache"
+            android:key="clear_glide_cache"/>
     </PreferenceCategory>
 </PreferenceScreen>

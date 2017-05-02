@@ -1,5 +1,7 @@
 package com.example.acer.readernew.Utils;
 
+import android.net.Uri;
+
 /**
  * Created by acer on 2017/3/24.
  * 设置默认的参数
@@ -14,6 +16,8 @@ public interface DefaultArgue {
     int num = 10;
     //起始位置，默认0
     int start = 0;
+    Uri uriCollection = Uri.parse("content://bookDB/COLLECTION");
+    Uri uriHistory = Uri.parse("content://bookDB/HISTORY");
 
     interface Channel {
         String headline = "头条";

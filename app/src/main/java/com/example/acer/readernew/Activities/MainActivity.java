@@ -1,6 +1,11 @@
 package com.example.acer.readernew.Activities;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
+import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -20,8 +25,8 @@ import com.example.acer.readernew.R;
 import com.example.acer.readernew.Utils.DefaultArgue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //ConfigurationUtil.setLocal(getApplicationContext(),ConfigurationUtil.getLocal(getApplicationContext()));
         setContentView(R.layout.activity_main);
 
         initView();
@@ -40,8 +46,32 @@ public class MainActivity extends AppCompatActivity
         initEvent();
     }
 
+    @TargetApi(Build.VERSION_CODES.N_MR1)
     private void initData() {
-
+        ShortcutManager manager = getSystemService(ShortcutManager.class);
+        List<ShortcutInfo> infos = new ArrayList<>();
+        ShortcutInfo collect = new ShortcutInfo.Builder(this,"id1")
+                .setShortLabel(getString(R.string.nav_collection))
+                .setLongLabel(getString(R.string.nav_collection))
+                .setIcon(Icon.createWithResource(this,R.drawable.ic_collections))
+                .setIntent(new Intent(this,CollectActivity.class).setAction(Intent.ACTION_VIEW))
+                .build();
+        ShortcutInfo history = new ShortcutInfo.Builder(this,"id2")
+                .setShortLabel(getString(R.string.nav_history))
+                .setLongLabel(getString(R.string.nav_history))
+                .setIcon(Icon.createWithResource(this,R.drawable.ic_history))
+                .setIntent(new Intent(this,HistoryActivity.class).setAction(Intent.ACTION_VIEW))
+                .build();
+        ShortcutInfo setting = new ShortcutInfo.Builder(this,"id3")
+                .setShortLabel(getString(R.string.nav_setting))
+                .setLongLabel(getString(R.string.nav_setting))
+                .setIcon(Icon.createWithResource(this,R.drawable.ic_settings))
+                .setIntent(new Intent(this,Setting.class).setAction(Intent.ACTION_VIEW))
+                .build();
+        infos.add(collect);
+        infos.add(history);
+        infos.add(setting);
+        manager.setDynamicShortcuts(infos);
     }
 
     private void initEvent() {
@@ -90,21 +120,21 @@ public class MainActivity extends AppCompatActivity
         tabMain.setTabMode(TabLayout.MODE_SCROLLABLE);
         //viewPager
         vpMain = (ViewPager) findViewById(R.id.vp_main);
-        List<Fragment> fragments =new ArrayList<>();
-        CustomFragment head = CustomFragment.newInstance(DefaultArgue.Channel.headline,"HeadlineCacheFile","HeadlineCache");
-        CustomFragment news = CustomFragment.newInstance(DefaultArgue.Channel.news,"NewsCacheFile","NewsCache");
-        CustomFragment finance = CustomFragment.newInstance(DefaultArgue.Channel.finance,"financeCacheFile","financeCache");
-        CustomFragment sport = CustomFragment.newInstance(DefaultArgue.Channel.sport,"sportCacheFile","sportCache");
-        CustomFragment entertainment = CustomFragment.newInstance(DefaultArgue.Channel.entertainment,"entertainmentCacheFile","entertainmentCache");
-        CustomFragment military = CustomFragment.newInstance(DefaultArgue.Channel.military,"militaryCacheFile","militaryCache");
-        CustomFragment education = CustomFragment.newInstance(DefaultArgue.Channel.education,"educationCacheFile","educationCache");
-        CustomFragment technology = CustomFragment.newInstance(DefaultArgue.Channel.technology,"technologyCacheFile","technologyCache");
-        CustomFragment NBA = CustomFragment.newInstance(DefaultArgue.Channel.NBA,"NBACacheFile","NBACache");
-        CustomFragment stock = CustomFragment.newInstance(DefaultArgue.Channel.stock,"stockCacheFile","stockCache");
-        CustomFragment constellation = CustomFragment.newInstance(DefaultArgue.Channel.constellation,"constellationCacheFile","constellationCache");
-        CustomFragment woman = CustomFragment.newInstance(DefaultArgue.Channel.woman,"womanCacheFile","womanCache");
-        CustomFragment health = CustomFragment.newInstance(DefaultArgue.Channel.health,"healthCacheFile","healthCache");
-        CustomFragment parenting = CustomFragment.newInstance(DefaultArgue.Channel.parenting,"parentingCacheFile","parentingCache");
+        List<Fragment> fragments = new ArrayList<>();
+        CustomFragment head = CustomFragment.newInstance(DefaultArgue.Channel.headline, "HeadlineCacheFile", "HeadlineCache");
+        CustomFragment news = CustomFragment.newInstance(DefaultArgue.Channel.news, "NewsCacheFile", "NewsCache");
+        CustomFragment finance = CustomFragment.newInstance(DefaultArgue.Channel.finance, "financeCacheFile", "financeCache");
+        CustomFragment sport = CustomFragment.newInstance(DefaultArgue.Channel.sport, "sportCacheFile", "sportCache");
+        CustomFragment entertainment = CustomFragment.newInstance(DefaultArgue.Channel.entertainment, "entertainmentCacheFile", "entertainmentCache");
+        CustomFragment military = CustomFragment.newInstance(DefaultArgue.Channel.military, "militaryCacheFile", "militaryCache");
+        CustomFragment education = CustomFragment.newInstance(DefaultArgue.Channel.education, "educationCacheFile", "educationCache");
+        CustomFragment technology = CustomFragment.newInstance(DefaultArgue.Channel.technology, "technologyCacheFile", "technologyCache");
+        CustomFragment NBA = CustomFragment.newInstance(DefaultArgue.Channel.NBA, "NBACacheFile", "NBACache");
+        CustomFragment stock = CustomFragment.newInstance(DefaultArgue.Channel.stock, "stockCacheFile", "stockCache");
+        CustomFragment constellation = CustomFragment.newInstance(DefaultArgue.Channel.constellation, "constellationCacheFile", "constellationCache");
+        CustomFragment woman = CustomFragment.newInstance(DefaultArgue.Channel.woman, "womanCacheFile", "womanCache");
+        CustomFragment health = CustomFragment.newInstance(DefaultArgue.Channel.health, "healthCacheFile", "healthCache");
+        CustomFragment parenting = CustomFragment.newInstance(DefaultArgue.Channel.parenting, "parentingCacheFile", "parentingCache");
         fragments.add(head);
         fragments.add(news);
         fragments.add(finance);
@@ -119,7 +149,7 @@ public class MainActivity extends AppCompatActivity
         fragments.add(woman);
         fragments.add(health);
         fragments.add(parenting);
-        MyViewPagerAdapter adapter = new MyViewPagerAdapter(getSupportFragmentManager(),MainActivity.this,fragments);
+        MyViewPagerAdapter adapter = new MyViewPagerAdapter(getSupportFragmentManager(), MainActivity.this, fragments);
         vpMain.setAdapter(adapter);
         tabMain.setupWithViewPager(vpMain);
     }
@@ -143,11 +173,13 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_homepage) {
 
         } else if (id == R.id.nav_collection) {
-
+            Intent intent = new Intent(this, CollectActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_history) {
-
+            Intent intent = new Intent(this, HistoryActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_setting) {
-            Intent intent = new Intent(this,Setting.class);
+            Intent intent = new Intent(this, Setting.class);
             startActivity(intent);
         }
 

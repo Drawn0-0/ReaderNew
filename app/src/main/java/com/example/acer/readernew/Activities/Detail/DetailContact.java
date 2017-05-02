@@ -44,7 +44,7 @@ public class DetailContact {
 
         void shareAsText();
 
-        void openUrl(WebView webView, String url);
+        void openUrl(WebView webView);
 
         void copyText();
 

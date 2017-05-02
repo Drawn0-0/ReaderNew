@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ReaderNew</string>
+    <string name="app_name">ReaderNews</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -27,9 +27,27 @@
     <string name="action_add_to_bookmarks">favorite</string>
     <string name="action_copy_link">copy link</string>
     <string name="action_copy_text">copy text</string>
-    <string name="action_open_in_browser">open in browser</string>
+    <string name="action_open_in_browser">Open the original</string>
     <string name="cancel_bookmarks">cancel favorite</string>
     <string name="basic">Basic</string>
     <string name="setting_language">language</string>
     <string name="settings">setting</string>
+    <string name="other">other</string>
+    <string name="snackBar_restart">it will be effective after the restart</string>
+    <string name="restart">restart</string>
+    <string name="in_app_browser">In_App_Browser</string>
+    <string name="in_app_browser_description">Open links with the built-in browser</string>
+    <string name="time_of_saving_articles">Time of Saving Articles</string>
+    <string name="clear_cache">Clear Cache</string>
+    <string name="add_to_favorite">Add to favorite</string>
+    <string name="delete_to_favorite">Delete from favorite</string>
+    <string name="copy_success">Copied to clipboard</string>
+    <string name="share_content">Shared from ReaderNew</string>
+    <string name="share_to">Share to</string>
+    <string name="no_data">No data</string>
+    <string name="dialog_alert_title">Warning</string>
+    <string name="dialog_alert_content">You sure you want to delete it?</string>
+    <string name="dialog_alert_yes">Yes</string>
+    <string name="dialog_alert_cancel">No</string>
+    <string name="history_title">History</string>
 </resources>

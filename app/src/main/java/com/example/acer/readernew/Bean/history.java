@@ -3,14 +3,14 @@ package com.example.acer.readernew.Bean;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.OrderBy;
 import org.greenrobot.greendao.annotation.Unique;
 
 /**
- * Created by acer on 2017/4/21.
+ * Created by acer on 2017/4/28.
  */
-
 @Entity
-public class Collection {
+public class history {
     @Id(autoincrement = true)
     private Long id;
     @Unique
@@ -22,10 +22,9 @@ public class Collection {
     private String content;
     private String url;
     private String weburl;
-    @Generated(hash = 136705694)
-    public Collection(Long id, String title, String time, String src,
-            String category, String pic, String content, String url,
-            String weburl) {
+    @Generated(hash = 985883360)
+    public history(Long id, String title, String time, String src, String category,
+            String pic, String content, String url, String weburl) {
         this.id = id;
         this.title = title;
         this.time = time;
@@ -36,13 +35,13 @@ public class Collection {
         this.url = url;
         this.weburl = weburl;
     }
-    @Generated(hash = 1149123052)
-    public Collection() {
+    @Generated(hash = 1897821470)
+    public history() {
     }
     public Long getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getTitle() {
@@ -92,8 +91,5 @@ public class Collection {
     }
     public void setWeburl(String weburl) {
         this.weburl = weburl;
-    }
-    public void setId(Long id) {
-        this.id = id;
     }
 }

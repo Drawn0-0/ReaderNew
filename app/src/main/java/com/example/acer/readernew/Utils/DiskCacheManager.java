@@ -85,7 +85,7 @@ public class DiskCacheManager {
      */
     public String get(String key) {
         InputStream inputStream = getCacheInputStream(key);
-        if (inputStream==null){
+        if (inputStream == null) {
             return null;
         }
         try {
@@ -144,7 +144,7 @@ public class DiskCacheManager {
         key = hashKeyForDisk(key);
         InputStream in;
         DiskLruCache.Snapshot snapshot = snapshot(key);
-        if (snapshot == null){
+        if (snapshot == null) {
             return null;
         }
         in = snapshot.getInputStream(0);
@@ -168,7 +168,7 @@ public class DiskCacheManager {
     }
 
     private File getDiskCacheDir(Context context, String uniqueName) {
-        String cachePath ;
+        String cachePath;
         if ((Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                 || !Environment.isExternalStorageRemovable())
                 && context.getExternalCacheDir() != null) {
@@ -212,5 +212,20 @@ public class DiskCacheManager {
             sb.append(hex);
         }
         return sb.toString();
+    }
+
+    public static long getSize() {
+        if (diskLruCache != null)
+            return diskLruCache.size();
+        else return 0;
+    }
+    public static void clearAll(){
+        if (diskLruCache!=null){
+            try {
+                diskLruCache.delete();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
