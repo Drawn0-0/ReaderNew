@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="none">
+    <group android:checkableBehavior="none"
+        android:id="@+id/main_nav"
+        >
         <item
             android:checked="true"
             android:id="@+id/nav_homepage"
@@ -17,6 +19,9 @@
             android:title="@string/nav_history" />
     </group>
     <group android:checkableBehavior="none">
+        <item android:id="@+id/nav_night"
+            android:icon="@drawable/ic_brightness_black"
+            android:title="@string/nav_night" />
         <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/ic_settings"

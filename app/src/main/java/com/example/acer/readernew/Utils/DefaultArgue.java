@@ -18,6 +18,9 @@ public interface DefaultArgue {
     int start = 0;
     Uri uriCollection = Uri.parse("content://bookDB/COLLECTION");
     Uri uriHistory = Uri.parse("content://bookDB/HISTORY");
+    String THEME = "theme";
+    int THEME_DAY_VALUE = 1;
+    int THEME_NIGHT_VALUE = 2;
 
     interface Channel {
         String headline = "头条";

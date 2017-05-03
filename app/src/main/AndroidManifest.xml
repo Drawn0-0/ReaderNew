@@ -31,7 +31,11 @@
             android:theme="@style/AppTheme.NoActionBarCustom" />
         <activity android:name=".Activities.CollectActivity" />
         <activity android:name=".Activities.HistoryActivity" />
-        <activity android:name=".Activities.InnerBrower.WebViewActivity"></activity>
+        <activity android:name=".Activities.InnerBrower.WebViewActivity" />
+
+        <service
+            android:name=".Service.NewsService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

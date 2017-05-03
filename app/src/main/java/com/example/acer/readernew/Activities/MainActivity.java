@@ -1,12 +1,14 @@
 package com.example.acer.readernew.Activities;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
+import android.content.res.Configuration;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -15,6 +17,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,10 +26,10 @@ import android.view.View;
 import com.example.acer.readernew.Adapter.MyViewPagerAdapter;
 import com.example.acer.readernew.Fragment.CustomFragment;
 import com.example.acer.readernew.R;
+import com.example.acer.readernew.Service.NewsService;
 import com.example.acer.readernew.Utils.DefaultArgue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -40,33 +44,39 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         //ConfigurationUtil.setLocal(getApplicationContext(),ConfigurationUtil.getLocal(getApplicationContext()));
         setContentView(R.layout.activity_main);
-
         initView();
-        initData();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            initData();
+        }
         initEvent();
+        Intent intent = new Intent(this, NewsService.class);
+        intent.putExtra(NewsService.EXTRA_PARAM1, android.preference.PreferenceManager.getDefaultSharedPreferences(this).getString("time_of_saving_articles","3"));
+        startService(intent);
     }
 
-    @TargetApi(Build.VERSION_CODES.N_MR1)
+
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     private void initData() {
+
         ShortcutManager manager = getSystemService(ShortcutManager.class);
         List<ShortcutInfo> infos = new ArrayList<>();
-        ShortcutInfo collect = new ShortcutInfo.Builder(this,"id1")
+        ShortcutInfo collect = new ShortcutInfo.Builder(this, "id1")
                 .setShortLabel(getString(R.string.nav_collection))
                 .setLongLabel(getString(R.string.nav_collection))
-                .setIcon(Icon.createWithResource(this,R.drawable.ic_collections))
-                .setIntent(new Intent(this,CollectActivity.class).setAction(Intent.ACTION_VIEW))
+                .setIcon(Icon.createWithResource(this, R.drawable.ic_collections))
+                .setIntent(new Intent(this, CollectActivity.class).setAction(Intent.ACTION_VIEW))
                 .build();
-        ShortcutInfo history = new ShortcutInfo.Builder(this,"id2")
+        ShortcutInfo history = new ShortcutInfo.Builder(this, "id2")
                 .setShortLabel(getString(R.string.nav_history))
                 .setLongLabel(getString(R.string.nav_history))
-                .setIcon(Icon.createWithResource(this,R.drawable.ic_history))
-                .setIntent(new Intent(this,HistoryActivity.class).setAction(Intent.ACTION_VIEW))
+                .setIcon(Icon.createWithResource(this, R.drawable.ic_history))
+                .setIntent(new Intent(this, HistoryActivity.class).setAction(Intent.ACTION_VIEW))
                 .build();
-        ShortcutInfo setting = new ShortcutInfo.Builder(this,"id3")
+        ShortcutInfo setting = new ShortcutInfo.Builder(this, "id3")
                 .setShortLabel(getString(R.string.nav_setting))
                 .setLongLabel(getString(R.string.nav_setting))
-                .setIcon(Icon.createWithResource(this,R.drawable.ic_settings))
-                .setIntent(new Intent(this,Setting.class).setAction(Intent.ACTION_VIEW))
+                .setIcon(Icon.createWithResource(this, R.drawable.ic_settings))
+                .setIntent(new Intent(this, Setting.class).setAction(Intent.ACTION_VIEW))
                 .build();
         infos.add(collect);
         infos.add(history);
@@ -167,6 +177,9 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -181,10 +194,19 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_setting) {
             Intent intent = new Intent(this, Setting.class);
             startActivity(intent);
+        } else if (id == R.id.nav_night) {
+            int mode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+            if (mode == Configuration.UI_MODE_NIGHT_YES) {//是夜间模式
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                sp.edit().putInt(DefaultArgue.THEME, DefaultArgue.THEME_DAY_VALUE).apply();
+            } else {//是日间模式
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                sp.edit().putInt(DefaultArgue.THEME, DefaultArgue.THEME_NIGHT_VALUE).apply();
+            }
+            recreate();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
