@@ -19,11 +19,15 @@ public class DetailActivity extends AppCompatActivity {
 //        getWindow().setEnterTransition(new Explode().setDuration(2000));
 //        getWindow().setExitTransition(new Explode().setDuration(2000));
         setContentView(R.layout.activity_detail);
+        if (savedInstanceState != null) {
+            fragment = (DetailFragment) getSupportFragmentManager().getFragment(savedInstanceState,"detailFragment");
+        } else {
+            fragment = new DetailFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.detail_container, fragment)
+                    .commit();
+        }
 
-        fragment = new DetailFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.detail_container, fragment)
-                .commit();
 //        }
         Intent intent = getIntent();
 
@@ -41,8 +45,10 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        finishAfterTransition();
-        super.onBackPressed();
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (fragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, "detailFragment", fragment);
+        }
     }
 }
